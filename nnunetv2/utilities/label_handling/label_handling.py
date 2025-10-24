@@ -135,7 +135,7 @@ class LabelManager(object):
 
         with torch.no_grad():
             # softmax etc is not implemented for half
-            logits = logits.float()
+            #logits = logits.float()
             probabilities = self.inference_nonlin(logits)
 
         return probabilities
