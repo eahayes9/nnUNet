@@ -39,7 +39,8 @@ from nnunetv2.utilities.utils import create_lists_from_splitted_dataset_folder
 class nnUNetPredictor(object):
     def __init__(self,
                  tile_step_size: float = 0.5,
-                 use_gaussian: bool = True,
+                 #use_gaussian: bool = True,
+                 use_gaussian: bool = False,
                  use_mirroring: bool = True,
                  perform_everything_on_device: bool = True,
                  device: torch.device = torch.device('cuda'),
@@ -591,7 +592,7 @@ class nnUNetPredictor(object):
 
             if self.use_gaussian:
                 gaussian = compute_gaussian(tuple(self.configuration_manager.patch_size), sigma_scale=1. / 8,
-                                            value_scaling_factor=5,
+                                            value_scaling_factor=2,
                                             device=results_device)
             else:
                 gaussian = 1
@@ -965,7 +966,8 @@ def predict_entry_point():
         device = torch.device('mps')
 
     predictor = nnUNetPredictor(tile_step_size=args.step_size,
-                                use_gaussian=True,
+                                #use_gaussian=True,
+                                use_gaussian=False,
                                 use_mirroring=not args.disable_tta,
                                 perform_everything_on_device=True,
                                 device=device,
@@ -1023,7 +1025,8 @@ if __name__ == '__main__':
 
     predictor = nnUNetPredictor(
         tile_step_size=0.5,
-        use_gaussian=True,
+        #$use_gaussian=True,
+        use_gaussian=False,
         use_mirroring=True,
         perform_everything_on_device=True,
         device=torch.device('cuda', 0),
